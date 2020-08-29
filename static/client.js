@@ -11,7 +11,7 @@ var socket = io()
 //rootWS = location.protocol + '//' + document.domain + ':' + location.port
 //console.log(rootWS)
 
-//var socket = io(location.protocol+'//' + document.domain + ':' + location.port, {transports: ['websocket']})
+var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port, {transports: ['websocket']})
 //console.log(socket)
 
 var btnGenerateMeeting = document.querySelector('#meetingButton')
