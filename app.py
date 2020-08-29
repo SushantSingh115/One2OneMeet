@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
-#from initialize import meetings, caller, callee, meetingId
 import initialize
 from flask_socketio import send, emit
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY'] = 'werwv1245674@$!@#!$@!'
+app.config['SECRET_KEY'] = '!23#4567$24%2134$531###'
 socketio = SocketIO(app)
 
 
