@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Webrtc Video Chat</title>
+  </head>
+  <body>
+  <nav class="navbar navbar-light bg-light text-center">
+  <h1 class="text-center">Create One-to-One Meeting</h1>
+  </nav>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="flex">
+              <table>
+                  <tr>
+                      <td><button type="button" class="btn btn-primary mb-2" id ="meetingButton">
+                          Generate Meeting URL
+                      </button><h2 class = "label-info" id = 'meetURL'></h2>
+                  </tr>
+                  <tr>
+                      <td><button type="button" id = "muteButton">Mute</button><button id = "pauseButton" type="button">Pause Video</button></td>
+                  </tr>
+                  <tr>
+                      <td><video title="Your Video" id = 'localVideo' autoplay></video></td>
+                      <td><video title="Participant Video" id = 'remoteVideo' autoplay></video></td>
+                  </tr>
+              </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <table>
+              <tr>Enter Chat Message</tr>
+              <tr><td><input id = "msgBox" type="text"></td><td><button id ="sendMessage" type="button" class ="btn btn-primary">Send</button></td></tr>
+              <table class="table">
+                  <th>Sent</th>
+                  <th>Received</th>
+                  <tr>
+                      <td><div class="card" id="sentMessage"></div></td>
+                      <td><div class="card" id ="recivedMessage"></div></td>
+                  </tr>
+              </table>
+          </table>
+      </div>
+  </div>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type ="text/javascript" src = "{{ url_for('static', filename='client.js') }}"></script>
+  </body>
+</html>
