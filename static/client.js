@@ -1,10 +1,12 @@
-var socket =io();
 var meetingId;
 var user;
 var connectedUser;
 var localStream;
 var dataChannel;
+
 var connectionobject = peerConnection()
+//var socket =io();
+var socket = io.connect('https://' + document.domain + ':' + location.port);
 
 var btnGenerateMeeting = document.querySelector('#meetingButton')
 var meetURL = document.querySelector('#meetURL')
