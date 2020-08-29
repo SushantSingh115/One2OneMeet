@@ -6,7 +6,6 @@ var dataChannel;
 
 var connectionobject = peerConnection()
 
-var socket = io()
 
 //rootWS = location.protocol + '//' + document.domain + ':' + location.port
 //console.log(rootWS)
