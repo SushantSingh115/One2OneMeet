@@ -73,4 +73,4 @@ def newicecandidate(msg):
 
 
 if __name__ == '__main__':
-    app.run(cors_allowed_origins="*")
+    socketio.run(app)
