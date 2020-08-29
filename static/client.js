@@ -5,9 +5,13 @@ var localStream;
 var dataChannel;
 
 var connectionobject = peerConnection()
-//var socket =io();
-var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, { transports: ['websocket'] })
+//var socket = io()
 
+rootWS = location.protocol + '//' + document.domain + ':' + location.port
+console.log(rootWS)
+
+var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port)
+console.log(socket)
 
 var btnGenerateMeeting = document.querySelector('#meetingButton')
 var meetURL = document.querySelector('#meetURL')
