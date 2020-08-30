@@ -8,7 +8,8 @@
   </head>
   <body>
   <nav class="navbar navbar-light bg-light text-center">
-  <h1 class="text-center">Create One-to-One Meeting</h1>
+  <h1 class = "text-center">One-to-One Meeting App</h1>
+      <h2 id = "waitDiv" class="text-center"></h2>
   </nav>
   <div class="row">
       <div class="col-md-6">
@@ -17,7 +18,11 @@
                   <tr>
                       <td><button type="button" class="btn btn-primary mb-2" id ="meetingButton">
                           Generate Meeting URL
-                      </button><h2 class = "label-info" id = 'meetURL'></h2>
+                      </button><p class = "label-info" id = 'meetURL'></p></td>
+                      <tr>
+                  <td><button type="button" id ="startMeetingButton">START Meeting</button></td>
+              </tr>
+
                   </tr>
                   <tr>
                       <td><button type="button" id = "muteButton">Mute</button><button id = "pauseButton" type="button">Pause Video</button></td>
@@ -29,8 +34,8 @@
               </table>
         </div>
       </div>
-      <div class="col-md-6">
-          <table>
+      <div class="col-md-6" id="chatDiv">
+          <table id = "chatTable">
               <tr>Enter Chat Message</tr>
               <tr><td><input id = "msgBox" type="text"></td><td><button id ="sendMessage" type="button" class ="btn btn-primary">Send</button></td></tr>
               <table class="table">

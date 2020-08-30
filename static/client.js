@@ -3,14 +3,43 @@ var user;
 var connectedUser;
 var localStream;
 var dataChannel;
+var meetingStarted;
+var connectionobject;
 
-var connectionobject = peerConnection()
+connectionobject = peerConnection()
+var chatDiv = document.querySelector("#chatDiv")
+var startMeetingButton = document.querySelector("#startMeetingButton")
+var waitDiv = document.querySelector("#waitDiv")
+var muteButton = document.querySelector("#muteButton")
+var pauseButton = document.querySelector("#pauseButton")
 
-var socket = io()
+startMeetingButton.style.display ="none"
+chatDiv.style.display ="none"
+muteButton.style.display ="none"
+pauseButton.style.display = "none"
+
+var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {transports: ['websocket']});
 
 var btnGenerateMeeting = document.querySelector('#meetingButton')
 var meetURL = document.querySelector('#meetURL')
-var remoteVideo = document.querySelector('#remoteVideo')
+
+startMeetingButton.onclick = function(event){
+    waitDiv.style.display = "none"
+    meetingStarted = true
+    connectionobject.createOffer({offerToReceiveAudio:true,offerToReceiveAudio:true})
+    .then(function(offer){
+        return connectionobject.setLocalDescription(offer)}).
+        then(function(){
+            socket.emit('createoffer',
+            {'meetingId':meetingId,
+            'connectedUser':connectedUser,
+            'offer':connectionobject.localDescription,
+            'caller':user})
+        }).catch(function(err){
+        console.log(err)
+    })
+}
+
 
 url = window.location.search
 if(url.split('=')[1])
@@ -19,7 +48,7 @@ meetingId = url.split('=')[1].split('&')[0]
 caller = url.split('=')[2]
 }
 if(meetingId){
-btnGenerateMeeting.innerHTML = 'Enter Meeting'
+btnGenerateMeeting.innerHTML = 'Request to Start the meeting'
 }
 btnGenerateMeeting.addEventListener ("click", function(){
     if(meetingId){
@@ -36,26 +65,19 @@ socket.on('meetingCreated',function(msg){
     meetURL.innerHTML = rootUrl+'?meetId='+msg.meetingId +'&caller='+msg.callerid
     user = msg.callerid
     meetingId = msg.meetingId
+    waitDiv.innerText = "Wait for User to connect"
 })
+
 
 socket.on('userConnected',function(msg){
     console.log("User Connected")
     connectedUser = msg.callee
-    connectionobject.createOffer({offerToReceiveAudio:true,offerToReceiveAudio:true})
-    .then(function(offer){
-        return connectionobject.setLocalDescription(offer)}).
-        then(function(){
-            socket.emit('createoffer',
-            {'meetingId':meetingId,
-            'connectedUser':connectedUser,
-            'offer':connectionobject.localDescription,
-            'caller':user})
-        }).catch(function(err){
-        console.log(err)
-    })
+    startMeetingButton.style.display = "block"
+    waitDiv.innerHTML = "User has joined, Please start the meeting"
 })
 
 socket.on('receiveoffer',function(msg){
+    btnGenerateMeeting.style.display = "none"
     connectedUser = msg.caller
     connectionobject.setRemoteDescription(new RTCSessionDescription(msg.offer)).
     then(function(){
@@ -78,6 +100,7 @@ socket.on('answer',function(answer){
 })
 
 socket.on('ice', (ice)=>{
+    console.log("ice candidate")
     connectionobject.addIceCandidate(ice)
 })
 
@@ -86,7 +109,10 @@ function peerConnection(){
 
     var mediaConstraints = {
         audio:true,
-        video: true
+        video:{
+        height : 200,
+        width: 300
+        }
     }
 
     const dataChannelOptions = { ordered: false, maxPacketLifeTime: 3000};
@@ -99,11 +125,12 @@ function peerConnection(){
     });
     navigator.mediaDevices.getUserMedia(mediaConstraints).
     then((stream) => {
-        console.log("Google Chrome")
         localVideo = document.querySelector("#localVideo")
         localVideo.srcObject = stream
         localStream = stream
         stream.getTracks().forEach((track => { connectionobject.addTrack(track, stream)}))
+        muteButton.style.display ="block"
+        pauseButton.style.display = "block"
     }).catch(function(err){
         console.log(err)
     })
@@ -119,13 +146,15 @@ function peerConnection(){
     const remoteStream = new MediaStream();
     const remoteVideo = document.querySelector('#remoteVideo');
     remoteVideo.srcObject = remoteStream;
-    connectionobject.addEventListener('track', async (event) => {
+    connectionobject.addEventListener('track', (event) => {
+    console.log("remote Stream")
     remoteStream.addTrack(event.track, remoteStream);
     });
 
     connectionobject.onconnectionstatechange = function(event){
         if(connectionobject.connectionState ==='connected'){
             console.log(connectionobject)
+            chatDiv.style.display = "block"
             }
         }
 
@@ -137,8 +166,7 @@ function peerConnection(){
     return connectionobject
 }
 
-var muteButton = document.querySelector("#muteButton")
-var pauseButton = document.querySelector("#pauseButton")
+
 
 muteButton.onclick = (ev)=>{
     localStream.getTracks()[0].enabled=!localStream.getTracks()[0].enabled

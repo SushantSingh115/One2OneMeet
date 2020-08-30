@@ -2,10 +2,13 @@ from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 import initialize
 from flask_socketio import send, emit
+from whitenoise import WhiteNoise
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
+app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 app.config['SECRET_KEY'] = '!23#4567$24%2134$531###'
 socketio = SocketIO(app)
+
 
 
 def createCaller():
@@ -36,6 +39,12 @@ def generateMeeting():
     msg = {'meetingId':newMeetingId,'callerid':newCaller}
     emit('meetingCreated', msg)
 
+@socketio.on('startMeeting')
+def startMeeting(msg):
+    meetingId = msg.meetinId
+    initialize.meetings[meetingId]["started"] = msg["started"]
+
+
 @socketio.on('enterMeeting')
 def enterMeeting(msg):
     meetingId = msg['meetingId']
@@ -62,7 +71,6 @@ def answer(msg):
     caller = msg['connectedUser']
     room = initialize.meetings[meetingId][caller]
     socketio.emit('answer', msg['answer'],room=room)
-
 
 @socketio.on('newicecandidate')
 def newicecandidate(msg):
