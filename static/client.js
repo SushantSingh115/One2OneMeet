@@ -155,6 +155,7 @@ function peerConnection(){
         if(connectionobject.connectionState ==='connected'){
             console.log(connectionobject)
             chatDiv.style.display = "block"
+		startMeetingButton.style.display ="none"
             }
         }
 
