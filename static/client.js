@@ -38,6 +38,7 @@ startMeetingButton.onclick = function(event){
         }).catch(function(err){
         console.log(err)
     })
+startMeetingButton.style.display ="none"
 }
 
 
@@ -155,7 +156,6 @@ function peerConnection(){
         if(connectionobject.connectionState ==='connected'){
             console.log(connectionobject)
             chatDiv.style.display = "block"
-		startMeetingButton.style.display ="none"
             }
         }
 
