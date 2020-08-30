@@ -6,12 +6,7 @@ var dataChannel;
 
 var connectionobject = peerConnection()
 
-
-//rootWS = location.protocol + '//' + document.domain + ':' + location.port
-//console.log(rootWS)
-
-var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port, {transports: ['websocket']})
-//console.log(socket)
+var socket = io()
 
 var btnGenerateMeeting = document.querySelector('#meetingButton')
 var meetURL = document.querySelector('#meetURL')

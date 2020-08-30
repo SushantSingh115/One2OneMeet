@@ -73,4 +73,4 @@ def newicecandidate(msg):
 
 
 if __name__ == '__main__':
-    socketio.init_app(app, cors_allowed_origins="*", host ="0.0.0.0")
+    socketio.run(app, host="0.0.0.0")
