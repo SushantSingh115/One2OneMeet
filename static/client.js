@@ -75,6 +75,7 @@ socket.on('userConnected',function(msg){
     connectedUser = msg.callee
     startMeetingButton.style.display = "block"
     waitDiv.innerHTML = "User has joined, Please start the meeting"
+    alert("User has joined, Please start the meeting")
 })
 
 socket.on('receiveoffer',function(msg){
