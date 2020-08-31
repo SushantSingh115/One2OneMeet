@@ -127,7 +127,14 @@ function peerConnection(){
     var mediaConstraints = { audio:true, video:{ height : 200, width: 300 }}
     //const dataChannelOptions = { ordered: false, maxPacketLifeTime: 3000};
 
-    const configuration = {'iceServers': [{'urls': 'stun:stun.l.google.com:19302'}]}
+    const configuration = {'iceServers': [
+        {'urls': 'stun:stun.l.google.com:19302'},
+        {
+        'urls': ["turns:turnserver.example.org", "turn:turnserver.example.org"],
+        'username': "webrtc",
+        'credential': "turnpassword"
+      }
+]}
     const connectionobject = new RTCPeerConnection(configuration);
     //dataChannel = connectionobject.createDataChannel("dataChannel", dataChannelOptions);
     dataChannel = connectionobject.createDataChannel("dataChannel");
