@@ -59,7 +59,6 @@ def enterMeeting(msg):
 
 @socketio.on('createoffer')
 def createoffer(msg):
-    print(msg)
     meetingId = msg['meetingId']
     caller = msg['caller']
     callee = msg['connectedUser']
