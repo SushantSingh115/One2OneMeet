@@ -9,27 +9,30 @@ app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 app.config['SECRET_KEY'] = '!23#4567$24%2134$531###'
 socketio = SocketIO(app)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-
+#Method to Generate caller Ids
 def createCaller():
     newCaller = 'caller' + str(initialize.caller)
     initialize.caller = initialize.caller + 1
     return newCaller
 
+#Method to Generate Callee Ids
 def createCallee():
     newCallee = 'callee' + str(initialize.callee)
     initialize.callee = initialize.callee + 1
     return newCallee
 
+#Methd to generate Meeting Ids
 def generateMeetinId():
     newMeetingId = 'meet' + str(initialize.meetingId)
     initialize.meetingId = initialize.meetingId + 1
     return newMeetingId
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
+#Events to set up Webrtc connection
 @socketio.on('generateMeeting')
 def generateMeeting():
     newMeetingId = generateMeetinId()
