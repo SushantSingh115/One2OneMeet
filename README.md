@@ -1,6 +1,12 @@
+About Application
 A webrtc based demo applicatin for nstant one to one conferencing. Application is deployed on heroku.
 
 Application Link
+https://immense-ravine-65935.herokuapp.com/ 
+
+Note
+
+In case of chrome if the application does not asks for audio & video permission then go to site settings and allow for camera & microphone. On page load please allow use of camera and microphone.
 
 Features
 1. One to One Video Conferencing App
@@ -33,10 +39,6 @@ Host End:
 
 5. Host clicks on start meeting button to start the meeting.
 
-
-Note:
-
-In case of chrome if the application does not asks for audio & video permission then go to site settings and allow for camera & microphone.
 
 
 Files:
