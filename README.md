@@ -27,8 +27,6 @@ User Roles
 
 How it works?
 
-Host End:
-
 1. Host clicks on the 'Generate Meeting URL' to generate meeting url.
 
 2. Share the meeting url to the other person or participant
@@ -38,8 +36,6 @@ Host End:
 4. Host gets alert to start the meeting.
 
 5. Host clicks on start meeting button to start the meeting.
-
-
 
 Files:
 
